@@ -1,20 +1,17 @@
-// app/sign-in/[[...rest]]/page.jsx
+'use client';
 import { SignIn } from "@clerk/nextjs";
-import { auth }   from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export default async function SignInPage() {
-  // If the user is already logged in, bypass the form
-  const { userId } = auth();
-  if (userId) redirect("/chat");
+export default function SignInPage() {
+  const router = useRouter();
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex h-screen items-center justify-center">
       <SignIn
         path="/sign-in"
         routing="path"
-        afterSignInUrl="/chat"
-        afterSignUpUrl="/chat"
+        appearance={{}}
+        afterSignIn={() => router.push("/chat")}
       />
     </div>
   );
